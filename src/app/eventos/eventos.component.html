@@ -1,8 +1,54 @@
-<h1>Eventos</h1>
+<h2>Eventos</h2>
+<hr>
 
-
-<div *ngFor="let evento of eventos">
-  <p><b>Tema:</b> {{evento.tema}}</p>
-  <p><b>Local:</b> {{evento.local}}</p>
-  <hr>
+<div class="form-inline">
+  <div class="form-group mb-2">
+    <label class="mr-2" for="filtroEventos">Filtro:</label>
+    <input id="filtroEventos" type="text" class="form-control mr-2" placeholder="Pesquisar Evento" [(ngModel)]="filtroLista">
+<!--    <button class="btn btn-outline-success"><i class="fa fa-search mr-2"></i>Buscar</button>-->
+  </div>
+</div>
+<div class="rounded-lg">
+  <table class="table table-striped table-hover table-bordered">
+    <thead class="thead-dark">
+    <tr class="text-center">
+      <th (click)="isCollapsed = !isCollapsed" style="cursor: pointer">
+        <i class="fa" [ngClass]="isCollapsed ? 'fa-eye-slash' : 'fa-eye'"></i>
+      </th>
+      <th>Tema</th>
+      <th>Local</th>
+      <th>Data</th>
+      <th>Qtd. Pessoas</th>
+      <th>Lote</th>
+      <th>Ações</th>
+    </tr>
+    </thead>
+    <tbody *ngIf="eventosFiltrados && eventosFiltrados.length">
+    <tr *ngFor="let evento of eventosFiltrados" class="text-center">
+      <td class="d-flex justify-content-center align-items-center">
+        <img
+          class="collapse" [collapse]="isCollapsed" [isAnimated]="true"
+          src="/assets/{{ evento.imgUrl }}"
+          alt="Imagens dos Eventos"
+          [style.width.em]="widthImg"
+          [style.height.em]="heightImg"
+          [style.margin.em]="marginImg">
+      </td>
+      <td>{{ evento.tema }}</td>
+      <td>{{ evento.local }}</td>
+      <td>{{ evento.dataEvento }}</td>
+      <td>{{ evento.qtdPessoas }}</td>
+      <td>{{ evento.lote }}</td>
+      <td>
+        <button class="btn btn-sm btn-info mr-2" title="Editar Evento"><i class="fa fa-edit"></i></button>
+        <button class="btn btn-sm btn-danger" title="Excluir Evento"><i class="fa fa-trash"></i></button>
+      </td>
+    </tr>
+    </tbody>
+    <tfoot *ngIf="!eventosFiltrados.length">
+    <tr>
+      <td colspan="8" class="text-center"><h5>Nenhum evento encontrado.</h5></td>
+    </tr>
+    </tfoot>
+  </table>
 </div>
